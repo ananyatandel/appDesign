@@ -5,7 +5,6 @@
 //  Created by Ananya Tandel on 10/16/23.
 //
 
-
 import SwiftUI
 
 struct ContentView: View {
@@ -83,6 +82,7 @@ struct ProfileButton: View {
 }
 
 struct CardView: View {
+    @State private var isLiked = false
     var body: some View {
         VStack {
             Image("crossaints-2")
@@ -96,9 +96,10 @@ struct CardView: View {
 
             HStack {
                 Button(action: {
-                    // heart button action
+                    isLiked.toggle() // Toggle the like status when the heart button is tapped
+                    saveLikeStatus() // Save the like status to UserDefaults
                 }) {
-                    Image(systemName: "heart")
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
                 }
 
                 Spacer()
@@ -122,6 +123,19 @@ struct CardView: View {
         .background(Color.white)
         .cornerRadius(10)
         .padding()
+        .onAppear(perform: loadLikeStatus) // Load the like status when the view appears
+    }
+
+    private func saveLikeStatus() {
+        // Save like status to UserDefaults
+        UserDefaults.standard.set(isLiked, forKey: "isLiked")
+    }
+
+    private func loadLikeStatus() {
+        // Load like status from UserDefaults
+        if let isLiked = UserDefaults.standard.object(forKey: "isLiked") as? Bool {
+            self.isLiked = isLiked
+        }
     }
 }
 
