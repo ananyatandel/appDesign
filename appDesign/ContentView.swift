@@ -63,7 +63,7 @@ struct ContentView: View {
 struct FilterButton: View {
     var body: some View {
         Button(action: {
-            // Add your filter functionality here
+            // functionality
         }) {
             Image(systemName: "line.horizontal.3.decrease.circle")
                 .font(.title)
